@@ -26,10 +26,8 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-
         binding.listsRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         binding.listsRecyclerview.adapter = ListSelectionRecyclerViewAdapter()
-
         return binding.root
     }
 
