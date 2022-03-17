@@ -1,5 +1,6 @@
 package com.raywenderlich.app.ui.detail.ui.detail
 
+import android.os.Binder
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.raywenderlich.app.R
+import com.raywenderlich.app.databinding.FragmentListDetailBinding
 
 class ListDetailFragment : Fragment() {
+
+    lateinit var binding: FragmentListDetailBinding
 
     companion object {
         fun newInstance() = ListDetailFragment()
@@ -20,7 +24,8 @@ class ListDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_list_detail, container, false)
+        binding = FragmentListDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
