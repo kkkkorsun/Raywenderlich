@@ -5,15 +5,27 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
+import androidx.preference.Preference
+import androidx.preference.PreferenceManager
 import com.raywenderlich.app.databinding.ActivityMainBinding
+import com.raywenderlich.app.models.TaskList
 import com.raywenderlich.app.ui.main.MainFragment
+import com.raywenderlich.app.ui.main.MainViewModel
+import com.raywenderlich.app.ui.main.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(
+            this,
+            MainViewModelFactory(PreferenceManager.getDefaultSharedPreferences(this))
+        ).get(MainViewModel::class.java)
+
         setContentView(R.layout.activity_main)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,7 +54,9 @@ class MainActivity : AppCompatActivity() {
         builder.setTitle(dialogTitle)
         builder.setView(listTitleEditText)
 
-        builder.setPositiveButton(positiveButtonTitle) { dialog, _ -> dialog.dismiss() }
+        builder.setPositiveButton(positiveButtonTitle) { dialog, _ -> dialog.dismiss()
+        viewModel.saveList(TaskList(listTitleEditText.text.toString()))
+        }
 
         builder.create().show()
     }
